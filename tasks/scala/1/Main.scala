@@ -1,3 +1,4 @@
+package recfun
 import scala.collection.mutable.ListBuffer
 
 object Main {

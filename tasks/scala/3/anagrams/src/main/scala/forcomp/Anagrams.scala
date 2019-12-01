@@ -195,22 +195,6 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-
-  /**
-   * What to say about this bastard...
-   * First we construct a helper sentenceAnagramsHelper which accepts Occurrences instead of Sentences
-   * Once constructed, it is called on sentenceOccurrences(sentence).
-   * The helper checks that the occurrence is non-empty and proceeds to construct all possible combinations
-   * For each combination ``elem'' that is in the occurrences list of a valid word from the dictionary
-   * and for each distinct anagram ``wordAnagram'' of that occurrence ``elem'' (the dictionaryByOccurrences is a map
-   * so we have to convert it from Option[List[...]] to List whereupon we have a List[List[...]] and we
-   * need to take the head) the helper is called with new occurrence ``subtract(occurrences, elem)'' and
-   * new accumulator ``accumulator.map(List(wordAnagram):::_))''.
-   * The first guarantees that on the next pass, we cannot reuse the words we just pulled out.
-   * The second begins the construction of a sentence by including the new word in the accumulator
-   * The whole for loop is a List[List[Sentence]] which needs to be flattened.
-   * Finally, the helper is called on the original sentence and the trivial list of sentences List(List()).
-   */
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
     def sentenceAnagramsHelper(occurrences: Occurrences, accumulator: List[Sentence]): List[Sentence] =
       if (occurrences.isEmpty) accumulator
@@ -224,10 +208,6 @@ object Anagrams {
     sentenceAnagramsHelper(sentenceOccurrences(sentence), List(List()))
   }
 
-  /**
-   * This function accepts an Occurrences list and checks whether there is an entry in the dictionary which matches it.
-   * That is, it checks that there is at least one word with that occurrences list.
-   */
   def isWord(occurrences: Occurrences): Boolean = !(dictionaryByOccurrences get occurrences).isEmpty
 
 }

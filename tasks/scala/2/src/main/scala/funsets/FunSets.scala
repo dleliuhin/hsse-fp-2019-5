@@ -1,3 +1,5 @@
+package funsets
+
 /**
  * 2. Purely Functional Sets.
  */
