@@ -1,6 +1,3 @@
-package recfun
-import common._
-
 object Main {
   def main(args: Array[String]) {
     println("Pascal's Triangle")
@@ -9,30 +6,60 @@ object Main {
         print(pascal(col, row) + " ")
       println()
     }
+
+    println("Balancing:")
+    val balancedLine = "()()()()()"
+    println(balance(balancedLine.toCharArray.toList))
+
+    val unbalancedLine = "()))()()()()"
+    println(balance(unbalancedLine.toCharArray.toList))
+
+    println("Count change:")
+    val coins = List(1,2,3)
+    println(countChange(10, coins))
+
   }
 
   /**
-   * Exercise 1
-   */
+    * Exercise 1
+    */
   def pascal(c: Int, r: Int): Int = {
-
+    if (c == 0 || c == r) 1
+    else pascal(c - 1, r - 1) + pascal(c, r - 1)
   }
 
   /**
-   * Exercise 2 Parentheses Balancing
-   */
+    * Exercise 2 Parentheses Balancing
+    */
   def balance(chars: List[Char]): Boolean = {
-   
+    def inside(chars: List[Char], open: Int): Boolean = {
+      if (chars.isEmpty) {
+        open == 0
+      } else {
+        val head = chars.head
+        val n =
+          if (head == '(') open + 1
+          else if (head == ')') open - 1
+          else open
+        if (n >= 0) inside(chars.tail, n)
+        else false
+      }
+    }
+
+    inside(chars, 0)
   }
 
   /**
-   * Exercise 3 Counting Change
-   * Write a recursive function that counts how many different ways you can make
-   * change for an amount, given a list of coin denominations. For example,
-   * there is 1 way to give change for 5 if you have coins with denomiation
-   * 2 and 3: 2+3.
-   */
+    * Exercise 3 Counting Change
+    * Write a recursive function that counts how many different ways you can make
+    * change for an amount, given a list of coin denominations. For example,
+    * there is 1 way to give change for 5 if you have coins with denomiation
+    * 2 and 3: 2+3.
+    */
   def countChange(money: Int, coins: List[Int]): Int = {
-
+    if (coins.isEmpty) 0
+    else if (money - coins.head == 0) 1
+    else if (money - coins.head < 0) 0
+    else countChange(money - coins.head, coins) + countChange(money, coins.tail)
   }
 }
